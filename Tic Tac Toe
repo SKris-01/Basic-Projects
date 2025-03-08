@@ -1,0 +1,108 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class TicTacToe extends JFrame implements ActionListener {
+   private static final int GRID_SIZE = 3;
+   private JButton[][] buttons;
+   private JButton resetButton;
+   private boolean playerXTurn;
+   private int moveCount;
+
+   public TicTacToe() {
+       // Set up the frame
+       super("SWASTIK KRISHNA");
+       setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+       setSize(650, 900);
+       setLayout(new BorderLayout());
+
+       // Initialize game board
+       JPanel gameBoard = new JPanel();
+       gameBoard.setLayout(new GridLayout(GRID_SIZE, GRID_SIZE));
+       buttons = new JButton[GRID_SIZE][GRID_SIZE];
+       for (int row = 0; row < GRID_SIZE; row++) {
+           for (int col = 0; col < GRID_SIZE; col++) {
+               buttons[row][col] = new JButton(" ");
+               buttons[row][col].setFont(new Font("New Times Roman", Font.PLAIN, 100));
+               buttons[row][col].setFocusPainted(false);
+               buttons[row][col].addActionListener(this);
+               gameBoard.add(buttons[row][col]);
+           }
+       }
+
+       // Add game board to frame
+       add(gameBoard, BorderLayout.CENTER);
+
+       // Initialize reset button
+       resetButton = new JButton("Reset");
+       resetButton.addActionListener(this);
+       add(resetButton, BorderLayout.SOUTH);
+
+       // Initialize game state
+       resetGame();
+
+       // Make the frame visible
+       setVisible(true);
+   }
+
+   // Resets the game state
+   private void resetGame() {
+       playerXTurn = true;
+       moveCount = 0;
+       for (int row = 0; row < GRID_SIZE; row++) {
+           for (int col = 0; col < GRID_SIZE; col++) {
+               buttons[row][col].setText("");
+               buttons[row][col].setEnabled(true);
+           }
+       }
+   }
+
+   // Handles button clicks and other actions
+   @Override
+   public void actionPerformed(ActionEvent e) {
+       if (e.getSource() == resetButton) {
+           resetGame();
+       } else {
+           JButton clickedButton = (JButton) e.getSource();
+           // Make a move
+           if (clickedButton.getText().isEmpty()) {
+               clickedButton.setText(playerXTurn ? "X" : "O");
+               clickedButton.setEnabled(false);
+               moveCount++;
+               // Check for winner or draw
+               if (checkForWinner()) {
+                   JOptionPane.showMessageDialog(this, playerXTurn ? "Player X wins!" : "Player O wins!");
+                   resetGame();
+               } else if (moveCount == GRID_SIZE * GRID_SIZE) {
+                   JOptionPane.showMessageDialog(this, "It's a draw!");
+                   resetGame();
+               } else {
+                   // Switch turns
+                   playerXTurn = !playerXTurn;
+               }
+           }
+       }
+   }
+
+   // Checks if there is a winner
+   private boolean checkForWinner() {
+       // Check rows and columns
+       for (int i = 0; i < GRID_SIZE; i++) {
+           if ((buttons[i][0].getText().equals(buttons[i][1].getText()) && buttons[i][1].getText().equals(buttons[i][2].getText()) && !buttons[i][0].getText().isEmpty()) ||
+                   (buttons[0][i].getText().equals(buttons[1][i].getText()) && buttons[1][i].getText().equals(buttons[2][i].getText()) && !buttons[0][i].getText().isEmpty())) {
+               return true;
+           }
+       }
+       // Check diagonals
+       if ((buttons[0][0].getText().equals(buttons[1][1].getText()) && buttons[1][1].getText().equals(buttons[2][2].getText()) && !buttons[0][0].getText().isEmpty()) ||
+               (buttons[0][2].getText().equals(buttons[1][1].getText()) && buttons[1][1].getText().equals(buttons[2][0].getText()) && !buttons[0][2].getText().isEmpty())) {
+           return true;
+       }
+       return false;
+   }
+
+   public static void main(String[] args) {
+       new TicTacToe();
+   }
+}
+
