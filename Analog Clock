@@ -1,0 +1,105 @@
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Calendar;
+
+public class AnalogClockApp extends JFrame {
+    public AnalogClockApp() {
+        setTitle("Analog Clock");
+        setSize(400, 450); // Increased height for date display
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        ClockPanel clockPanel = new ClockPanel();
+        add(clockPanel);
+
+        // Timer to repaint the clock every second
+        Timer timer = new Timer(1000, new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                clockPanel.repaint();
+            }
+        });
+        timer.start();
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                new AnalogClockApp().setVisible(true);
+            }
+        });
+    }
+}
+
+class ClockPanel extends JPanel {
+    private final int clockRadius;
+    private final int centerX;
+    private final int centerY;
+
+    public ClockPanel() {
+        this.clockRadius = 150;
+        this.centerX = 200;
+        this.centerY = 200;
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        drawClockFace(g);
+        drawClockHands(g);
+        drawDate(g);
+    }
+
+    private void drawClockFace(Graphics g) {
+        g.setColor(Color.WHITE);
+        g.fillOval(centerX - clockRadius, centerY - clockRadius, 2 * clockRadius, 2 * clockRadius);
+        g.setColor(Color.BLACK);
+        g.drawOval(centerX - clockRadius, centerY - clockRadius, 2 * clockRadius, 2 * clockRadius);
+
+        for (int i = 1; i <= 12; i++) {
+            double angle = Math.toRadians((i * 30) - 90);
+            int x = (int) (centerX + Math.cos(angle) * (clockRadius - 20));
+            int y = (int) (centerY + Math.sin(angle) * (clockRadius - 20));
+            String number = String.valueOf(i);
+            FontMetrics fm = g.getFontMetrics();
+            int numberWidth = fm.stringWidth(number);
+            int numberHeight = fm.getAscent();
+            g.drawString(number, x - numberWidth / 2, y + numberHeight / 2);
+        }
+    }
+
+    private void drawClockHands(Graphics g) {
+        Calendar calendar = Calendar.getInstance();
+        int hours = calendar.get(Calendar.HOUR);
+        int minutes = calendar.get(Calendar.MINUTE);
+        int seconds = calendar.get(Calendar.SECOND);
+
+        // Hour hand
+        double hourAngle = Math.toRadians((hours + minutes / 60.0) * 30 - 90);
+        drawHand(g, hourAngle, clockRadius - 60, 6, Color.BLACK);
+
+        // Minute hand
+        double minuteAngle = Math.toRadians((minutes + seconds / 60.0) * 6 - 90);
+        drawHand(g, minuteAngle, clockRadius - 40, 4, Color.BLACK);
+
+        // Second hand
+        double secondAngle = Math.toRadians(seconds * 6 - 90);
+        drawHand(g, secondAngle, clockRadius - 30, 2, Color.RED);
+    }
+
+    private void drawHand(Graphics g, double angle, int length, int width, Color color) {
+        int x = (int) (centerX + Math.cos(angle) * length);
+        int y = (int) (centerY + Math.sin(angle) * length);
+        g.setColor(color);
+        ((Graphics2D) g).setStroke(new BasicStroke(width));
+        g.drawLine(centerX, centerY, x, y);
+    }
+
+    private void drawDate(Graphics g) {
+        Calendar calendar = Calendar.getInstance();
+        String date = String.format("%1$tA, %1$tb %1$td, %1$tY", calendar);
+        g.setColor(Color.BLACK);
+        g.drawString(date, centerX - 70, centerY + clockRadius + 20);
+    }
+}
