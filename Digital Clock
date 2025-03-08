@@ -1,0 +1,112 @@
+import java.awt.*;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import javax.swing.*;
+//SWASTIK KRISHNA
+public class Digitalclock extends JFrame {
+
+   SimpleDateFormat timeFormat, dayFormat, dateFormat;
+   JLabel timeLabel, dayLabel, dateLabel, imageLabel;
+   String time, day, date;
+
+   public Digitalclock() {
+       // Set title and default close operation
+       this.setTitle("SWASTIK KRISHNA");
+       this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+       // Initialize date formats
+       timeFormat = new SimpleDateFormat("hh:mm:ss a");
+       dayFormat = new SimpleDateFormat("EEEE");
+       dateFormat = new SimpleDateFormat("MM dd, yyyy");
+
+       // Create labels
+       timeLabel = new JLabel();
+       dayLabel = new JLabel();
+       dateLabel = new JLabel();
+       imageLabel = new JLabel();
+
+       // Set fonts and colors
+       timeLabel.setFont(new Font("SansSerif", Font.PLAIN, 50));
+       timeLabel.setForeground(new Color(0x359DE5));
+       dayLabel.setFont(new Font("SansSerif", Font.PLAIN, 30));
+       dateLabel.setFont(new Font("SansSerif", Font.PLAIN, 30));
+
+       // Update time labels
+       updateTimeLabels();
+
+       // Layout management
+       // Use a BoxLayout for vertical stacking
+       this.setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+
+       // Add labels to the frame
+       this.add(timeLabel);
+       this.add(dayLabel);
+       this.add(dateLabel);
+
+       // Load and add image
+       loadImage();
+       this.add(imageLabel);
+
+       // Set the frame size to fit content and make it visible
+       this.pack();
+       this.setResizable(false);
+       this.setVisible(true);
+
+       // Continuously update the time
+       setTime();
+   }
+
+   private void loadImage() {
+       // Specify the path to the image
+       String imagePath = "C:\\Users\\nitis\\Downloads\\sunrise.jpeg";
+
+       // Create an ImageIcon with the image path
+       ImageIcon icon = new ImageIcon(imagePath);
+
+       // Obtain the image from the icon
+       Image image = icon.getImage();
+
+       // Resize the image to fit the desired width and height, keeping the aspect ratio
+       int imageWidth = 300; // Adjust as needed
+       int imageHeight = 300; // Adjust as needed
+
+       // Use getScaledInstance to resize the image while maintaining aspect ratio
+       Image resizedImage = image.getScaledInstance(imageWidth, imageHeight, Image.SCALE_SMOOTH);
+
+       // Create a new ImageIcon with the resized image
+       ImageIcon resizedIcon = new ImageIcon(resizedImage);
+
+       // Set the resized icon to the JLabel
+       imageLabel.setIcon(resizedIcon);
+   }
+
+   // Continuously update the time labels
+   private void setTime() {
+       while (true) {
+           updateTimeLabels();
+
+           try {
+               Thread.sleep(1000); // Sleep for 1 second before updating again
+           } catch (InterruptedException e) {
+               e.printStackTrace();
+           }
+       }
+   }
+
+   // Updates time labels
+   private void updateTimeLabels() {
+       time = timeFormat.format(Calendar.getInstance().getTime());
+       timeLabel.setText(time);
+
+       day = dayFormat.format(Calendar.getInstance().getTime());
+       dayLabel.setText(day);
+
+       date = dateFormat.format(Calendar.getInstance().getTime());
+       dateLabel.setText(date);
+   }
+
+   public static void main(String[] args) {
+       new Digitalclock();
+   }
+}
+
