@@ -12,7 +12,7 @@ This repository is designed for beginners who want to **practice coding by build
 - **Digital Clock** – Simple digital clock with live time updates  
 - **Picture Puzzle** – Interactive puzzle game using images  
 - **Pong Game** – Classic arcade-style two-player game  
-- **Tic Tac Toe** – Multiplayer or AI vs Player game implementation  
+- **Tic Tac Toe** – 2 Player game implementation  
 
 ---
 
