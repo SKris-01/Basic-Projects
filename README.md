@@ -1,2 +1,26 @@
-# Beginner-s-Steps
-This repository serves as a learning hub for beginners who want to get hands-on experience with coding. It includes well-documented codes and projects that cover fundamental concepts in Java, C++, and Python. Whether you're a student, self-learner, or someone looking to refresh your skills, this repository is the perfect starting point.
+# Mini Projects  
+
+Welcome to the **Basic Programs & Mini Projects Repository**! 🎉  
+
+This repository is designed for beginners who want to **practice coding by building fun, hands-on projects**. It includes simple yet powerful programs implemented in **Java, C++, and Python** that focus on logic-building, problem-solving, and creativity.  
+
+---
+
+## 📂 Projects Included  
+
+- **Analog Clock** – GUI-based clock showing real-time updates  
+- **Digital Clock** – Simple digital clock with live time updates  
+- **Picture Puzzle** – Interactive puzzle game using images  
+- **Pong Game** – Classic arcade-style two-player game  
+- **Tic Tac Toe** – Multiplayer or AI vs Player game implementation  
+
+---
+
+## 🎯 Learning Objectives  
+
+By working on these projects, learners will:  
+- Understand **basic programming concepts** (loops, conditionals, arrays, functions)  
+- Explore **GUI programming and graphics**  
+- Apply **Object-Oriented Programming (OOP)** principles  
+- Strengthen **logic development** through games and puzzles  
+- Build confidence to move towards **intermediate and advanced projects**  
