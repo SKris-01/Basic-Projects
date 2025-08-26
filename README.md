@@ -1,6 +1,6 @@
 # Mini Projects  
 
-Welcome to the **Basic Programs & Mini Projects Repository**! 🎉  
+Welcome to the **Mini Projects Repository**! 🎉  
 
 This repository is designed for beginners who want to **practice coding by building fun, hands-on projects**. It includes simple yet powerful programs implemented in **Java, C++, and Python** that focus on logic-building, problem-solving, and creativity.  
 
